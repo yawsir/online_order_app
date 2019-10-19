@@ -65,8 +65,13 @@ export default {
 <style lang="scss" scoped>
 #login{
     text-align: center;
+    background: url('../assets/back.jpeg') no-repeat;
+    background-size: 100% 100%;
+    height: 100%;
     .logo-wrap{
-        margin-top: 10rem;
+        // margin-top: 10rem;
+        box-sizing: border-box;
+        padding-top: 10rem;
         text-align: center;
         width: 100%;
         .logo{

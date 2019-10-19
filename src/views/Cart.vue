@@ -28,7 +28,7 @@
                         <div class="amount_controler">
                             <div class="controler_inner">
                                 <div class="sub" @click="onSub(index)">-</div>
-                                <input class="amount" type="number" v-model="cartList[index].fields.count"/>
+                                <input class="amount" type="number" v-model="cartList[index].count"/>
                                 <div class="add" @click="onAdd(index)">+</div>
                             </div>
                         </div>
@@ -113,8 +113,8 @@ export default {
         },
         onAdd(cartIndex){
             const user_id = Utils.storage.get('userInfo').userId
-            const goods_id = this.cartList[cartIndex].fields.goods
-            const count = ++this.cartList[cartIndex].fields.count
+            const goods_id = this.cartList[cartIndex].goods_id
+            const count = ++this.cartList[cartIndex].count
             this.$axios.get(`${this.apiAddr}/cart/appcartAlter?user_id=${user_id}&goods_id=${goods_id}&count=${count}`)
             .then((res) => {
                 console.log(res)
@@ -124,12 +124,12 @@ export default {
             })
         },
         onSub(cartIndex){
-            if(this.cartList[cartIndex].fields.count == 0){
+            if(this.cartList[cartIndex].count == 0){
                 return 
             }
             const user_id = Utils.storage.get('userInfo').userId
-            const goods_id = this.cartList[cartIndex].fields.goods
-            const count = --this.cartList[cartIndex].fields.count
+            const goods_id = this.cartList[cartIndex].goods_id
+            const count = --this.cartList[cartIndex].count
             this.$axios.get(`${this.apiAddr}/cart/appcartAlter?user_id=${user_id}&goods_id=${goods_id}&count=${count}`)
             .then((res) => {
                 console.log(res)
@@ -148,14 +148,14 @@ export default {
         totalPrice(){   //购物车内菜品总价
             let tp = 0
             for(let i in this.cartList){
-                tp += Number.parseFloat(this.goodsList[i][0].fields.gprice) * Number.parseInt(this.cartList[i].fields.count)
+                tp += Number.parseFloat(this.goodsList[i][0].fields.gprice) * Number.parseInt(this.cartList[i].count)
             }
             return tp
         },
         totalNumber(){  //购物车内菜品总数
             let tn = 0
             for(let item of this.cartList){
-                tn += Number.parseInt(item.fields.count)
+                tn += Number.parseInt(item.count)
             }
             return tn
         },
